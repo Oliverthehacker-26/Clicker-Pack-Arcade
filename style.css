@@ -1,0 +1,113 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #16052e, #321064, #101b45);
+  color: white;
+  text-align: center;
+}
+
+header {
+  padding: 30px 15px;
+  background: #10051f;
+  border-bottom: 3px solid #a855f7;
+}
+
+header h1 {
+  color: #facc15;
+  font-size: 36px;
+  margin: 0;
+}
+
+header p {
+  color: #d8b4fe;
+}
+
+main {
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 15px;
+}
+
+section {
+  background: rgba(255,255,255,0.09);
+  border: 2px solid #8b5cf6;
+  border-radius: 18px;
+  padding: 25px;
+  margin: 22px 0;
+  box-shadow: 0 5px 20px #0005;
+}
+
+h2 {
+  color: #facc15;
+}
+
+#coins {
+  color: #facc15;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 15px;
+}
+
+button {
+  background: linear-gradient(135deg, #9333ea, #6d28d9);
+  color: white;
+  border: 2px solid #c084fc;
+  border-radius: 12px;
+  padding: 15px 22px;
+  margin: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.06);
+  background: #a855f7;
+}
+
+#coin-button {
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #351000;
+  border: 3px solid #fde68a;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  font-size: 22px;
+}
+
+.packs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+#collection {
+  background: #16052e;
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 60px;
+}
+
+#message {
+  color: #fde68a;
+  font-weight: bold;
+  min-height: 25px;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 27px;
+  }
+
+  button {
+    width: 100%;
+    margin: 6px 0;
+  }
+}
