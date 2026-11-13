@@ -158,6 +158,17 @@ function update() {
   drawCollection();
   saveGame();
 }
+function openAdmin() {
+  const code = prompt("🔐 ENTER 6-DIGIT ADMIN CODE:");
 
+  if (code === "841036") {
+    coins = Infinity;
+    update();
+    showMessage("👑 ADMIN ACTIVATED! INFINITE MONEY!");
+    alert("ADMIN ACCESS GRANTED! INFINITE MONEY!");
+  } else if (code !== null) {
+    alert("❌ ACCESS DENIED!");
+  }
+}
 drawPacks();
 update();
