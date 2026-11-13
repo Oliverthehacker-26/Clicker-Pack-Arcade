@@ -16,7 +16,6 @@ const packs = [
       { name: "Celestial Sunlion", emoji: "🦁🌌", chance: 20, rarity: "Epic" }
     ]
   },
-
   {
     name: "Classmates Pack",
     price: 10000,
@@ -39,7 +38,6 @@ const packs = [
       { name: "Secret Classmate", emoji: "🔮", chance: 0.00000000001, rarity: "Secret" }
     ]
   },
-
   {
     name: "Teachers Pack",
     price: 2000,
@@ -66,10 +64,8 @@ function saveGame() {
 
 function clickCoin() {
   coins += power;
-
   document.getElementById("floatingRewards").textContent =
     "+" + power + " 🪙";
-
   update();
 }
 
@@ -119,7 +115,7 @@ function toggleLuck() {
 
   showMessage(
     luckEnabled
-      ? "LUCK MODE ACTIVATED! Mystical, Secret and Legendary only!"
+      ? "100% SECRET OR MYSTICAL LUCK ACTIVATED!"
       : "Luck Mode disabled."
   );
 }
@@ -132,9 +128,14 @@ function buyPack(index) {
     return;
   }
 
-  coins -= pack.price;
-
   const character = chooseCharacter(pack.characters);
+
+  if (!character) {
+    showMessage("This pack has no Secret or Mystical characters!");
+    return;
+  }
+
+  coins -= pack.price;
 
   if (!owned.includes(character.name)) {
     owned.push(character.name);
@@ -154,18 +155,19 @@ function buyPack(index) {
 function chooseCharacter(characters) {
   if (luckEnabled) {
     const luckyCharacters = characters.filter(character =>
-      ["Mystical", "Secret", "Legendary"].includes(character.rarity)
+      character.rarity === "Mystical" ||
+      character.rarity === "Secret"
     );
 
-    if (luckyCharacters.length > 0) {
-      const randomIndex = Math.floor(
-        Math.random() * luckyCharacters.length
-      );
-
-      return luckyCharacters[randomIndex];
+    if (luckyCharacters.length === 0) {
+      return null;
     }
 
-    showMessage("No lucky characters in this pack!");
+    const randomIndex = Math.floor(
+      Math.random() * luckyCharacters.length
+    );
+
+    return luckyCharacters[randomIndex];
   }
 
   const totalChance = characters.reduce(
