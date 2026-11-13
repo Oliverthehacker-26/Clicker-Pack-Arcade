@@ -16,6 +16,7 @@ const packs = [
       { name: "Celestial Sunlion", emoji: "🦁🌌", chance: 20, rarity: "Epic" }
     ]
   },
+
   {
     name: "Classmates Pack",
     price: 10000,
@@ -38,6 +39,7 @@ const packs = [
       { name: "Secret Classmate", emoji: "🔮", chance: 0.00000000001, rarity: "Secret" }
     ]
   },
+
   {
     name: "Teachers Pack",
     price: 2000,
@@ -64,8 +66,10 @@ function saveGame() {
 
 function clickCoin() {
   coins += power;
+
   document.getElementById("floatingRewards").textContent =
     "+" + power + " 🪙";
+
   update();
 }
 
@@ -113,7 +117,11 @@ function toggleLuck() {
   document.getElementById("luckButton").textContent =
     luckEnabled ? "🍀 LUCK MODE: ON" : "🍀 LUCK MODE: OFF";
 
-  alert(luckEnabled ? "LUCK MODE ACTIVATED!" : "LUCK MODE DISABLED!");
+  showMessage(
+    luckEnabled
+      ? "LUCK MODE ACTIVATED! Mystical, Secret and Legendary only!"
+      : "Luck Mode disabled."
+  );
 }
 
 function buyPack(index) {
@@ -138,33 +146,36 @@ function buyPack(index) {
     character.rarity + "<br>" +
     "You opened: " + pack.name;
 
-  showMessage("New pack opened!");
+  showMessage("You got " + character.name + "!");
+
   update();
 }
 
 function chooseCharacter(characters) {
-  let available = characters;
-
   if (luckEnabled) {
     const luckyCharacters = characters.filter(character =>
-      character.rarity === "Mystical" ||
-      character.rarity === "Secret" ||
-      character.rarity === "Legendary"
+      ["Mystical", "Secret", "Legendary"].includes(character.rarity)
     );
 
     if (luckyCharacters.length > 0) {
-      available = luckyCharacters;
+      const randomIndex = Math.floor(
+        Math.random() * luckyCharacters.length
+      );
+
+      return luckyCharacters[randomIndex];
     }
+
+    showMessage("No lucky characters in this pack!");
   }
 
-  const totalChance = available.reduce(
+  const totalChance = characters.reduce(
     (sum, character) => sum + character.chance, 0
   );
 
   let roll = Math.random() * totalChance;
   let total = 0;
 
-  for (const character of available) {
+  for (const character of characters) {
     total += character.chance;
 
     if (roll < total) {
@@ -172,7 +183,7 @@ function chooseCharacter(characters) {
     }
   }
 
-  return available[available.length - 1];
+  return characters[characters.length - 1];
 }
 
 function showMessage(message) {
