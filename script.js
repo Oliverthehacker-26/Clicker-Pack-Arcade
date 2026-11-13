@@ -31,9 +31,11 @@ const packs = [
       { name: "Snot.rak.et", emoji: "🚀", chance: 10, rarity: "Epic" },
       { name: "Toot.sy", emoji: "🎈", chance: 5, rarity: "Legendary" },
       { name: "Belch.er", emoji: "🐸", chance: 5, rarity: "Legendary" },
+
       { name: "Wang Tianxin", emoji: "🌟", chance: 0.00000000001, rarity: "Mystical" },
       { name: "Ong Yi Oliver", emoji: "👑", chance: 0.00000000001, rarity: "Mystical" },
-      { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Mystical" }
+      { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Mystical" },
+      { name: "Secret Classmate", emoji: "🔮", chance: 0.00000000001, rarity: "Secret" }
     ]
   },
   {
@@ -57,12 +59,13 @@ const packs = [
 ];
 
 function saveGame() {
-  // Saving is disabled, as requested.
+  // Saving is disabled.
 }
 
 function clickCoin() {
   coins += power;
-  document.getElementById("floatingRewards").textContent = "+" + power + " 🪙";
+  document.getElementById("floatingRewards").textContent =
+    "+" + power + " 🪙";
   update();
 }
 
@@ -75,30 +78,9 @@ function buyUpgrade() {
   coins -= upgradeCost;
   power++;
   upgradeCost = Math.floor(upgradeCost * 1.8);
+
   showMessage("Click power upgraded!");
   update();
-}
-
-function toggleLuck() {
-  const code = prompt("Enter admin password:");
-
-  if (code === null) return;
-
-  if (code !== "841036") {
-    alert("ACCESS DENIED!");
-    return;
-  }
-
-  luckEnabled = !luckEnabled;
-
-  const button = document.getElementById("luckButton");
-  if (button) {
-    button.textContent = luckEnabled
-      ? "🍀 LUCK MODE: ON"
-      : "🍀 LUCK MODE: OFF";
-  }
-
-  alert(luckEnabled ? "LUCK MODE ACTIVATED!" : "LUCK MODE DISABLED!");
 }
 
 function openAdmin() {
@@ -114,6 +96,24 @@ function openAdmin() {
   } else {
     alert("ACCESS DENIED!");
   }
+}
+
+function toggleLuck() {
+  const code = prompt("ENTER ADMIN PASSWORD:");
+
+  if (code === null) return;
+
+  if (code !== "841036") {
+    alert("ACCESS DENIED!");
+    return;
+  }
+
+  luckEnabled = !luckEnabled;
+
+  document.getElementById("luckButton").textContent =
+    luckEnabled ? "🍀 LUCK MODE: ON" : "🍀 LUCK MODE: OFF";
+
+  alert(luckEnabled ? "LUCK MODE ACTIVATED!" : "LUCK MODE DISABLED!");
 }
 
 function buyPack(index) {
@@ -148,6 +148,7 @@ function chooseCharacter(characters) {
   if (luckEnabled) {
     const luckyCharacters = characters.filter(character =>
       character.rarity === "Mystical" ||
+      character.rarity === "Secret" ||
       character.rarity === "Legendary"
     );
 
@@ -165,7 +166,10 @@ function chooseCharacter(characters) {
 
   for (const character of available) {
     total += character.chance;
-    if (roll < total) return character;
+
+    if (roll < total) {
+      return character;
+    }
   }
 
   return available[available.length - 1];
@@ -192,7 +196,9 @@ function drawCollection() {
       const unlocked = owned.includes(character.name);
 
       return "<div class='character " + (unlocked ? "" : "locked") + "'>" +
-        "<div style='font-size:35px'>" + (unlocked ? character.emoji : "❓") + "</div>" +
+        "<div style='font-size:35px'>" +
+        (unlocked ? character.emoji : "❓") +
+        "</div>" +
         "<strong>" + (unlocked ? character.name : "???") + "</strong><br>" +
         (unlocked ? character.rarity : "Locked") +
         (unlocked ? "<br><small>Unlocked!</small>" : "") +
@@ -202,8 +208,11 @@ function drawCollection() {
 }
 
 function update() {
-  document.getElementById("coins").textContent = coins.toLocaleString();
+  document.getElementById("coins").textContent =
+    coins.toLocaleString();
+
   document.getElementById("power").textContent = power;
+
   document.getElementById("upgradeButton").textContent =
     "Upgrade Click Power — " + upgradeCost.toLocaleString() + " Coins";
 
