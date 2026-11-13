@@ -3,7 +3,7 @@ let coins = 1000;
 let power = 1;
 let upgradeCost = 50;
 let owned = [];
-
+let luckEnabled = false;
 const packs = [
   {
     name: "Steal an Egg Pets Pack",
