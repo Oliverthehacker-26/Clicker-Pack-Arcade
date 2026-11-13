@@ -1,5 +1,5 @@
 
-let coins = Number(localStorage.getItem("coins") ?? 1000);
+let coins = 1000;
 let power = Number(localStorage.getItem("power")) || 1;
 let upgradeCost = Number(localStorage.getItem("upgradeCost")) || 50;
 let owned = JSON.parse(localStorage.getItem("owned")) || [];
