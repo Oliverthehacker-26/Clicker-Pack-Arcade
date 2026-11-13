@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARCADE ARENA - Clicker Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🎮 ARCADE ARENA</h1>
+    <p>Click coins. Open packs. Collect rewards!</p>
+  </header>
+
+  <main>
+    <section class="coin-area">
+      <h2>Your Coins</h2>
+      <div id="coins">0</div>
+      <button id="coin-button" onclick="clickCoin()">🪙 CLICK ME!</button>
+      <p>Coins per click: <span id="power">1</span></p>
+    </section>
+
+    <section class="upgrade-area">
+      <h2>⚡ Upgrades</h2>
+      <button onclick="buyUpgrade()">
+        Upgrade Click Power — <span id="upgrade-cost">50</span> coins
+      </button>
+    </section>
+
+    <section class="shop-area">
+      <h2>🎁 Pack Shop</h2>
+      <div class="packs">
+        <button onclick="buyPack(100, 'Common')">Common Pack — 100</button>
+        <button onclick="buyPack(500, 'Rare')">Rare Pack — 500</button>
+        <button onclick="buyPack(2000, 'Epic')">Epic Pack — 2,000</button>
+        <button onclick="buyPack(10000, 'Legendary')">Legendary Pack — 10,000</button>
+      </div>
+    </section>
+
+    <section class="collection-area">
+      <h2>🏆 Your Collection</h2>
+      <div id="collection">No rewards yet. Open a pack!</div>
+    </section>
+
+    <p id="message">Welcome to ARCADE ARENA!</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
