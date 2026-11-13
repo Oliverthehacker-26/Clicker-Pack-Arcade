@@ -1,73 +1,169 @@
 
-let coins = 0;
-let power = 1;
-let upgradeCost = 50;
-let collection = [];
+let coins = Number(localStorage.getItem("coins")) || 0;
+let power = Number(localStorage.getItem("power")) || 1;
+let upgradeCost = Number(localStorage.getItem("upgradeCost")) || 50;
+let owned = JSON.parse(localStorage.getItem("owned")) || [];
 
-const rewards = {
-  Common: ["Slime", "Little Dragon", "Lucky Cat", "Blue Blob"],
-  Rare: ["Neon Fox", "Golden Knight", "Cyber Bot"],
-  Epic: ["Galaxy Dragon", "Shadow King", "Thunder Beast"],
-  Legendary: ["Cosmic Phoenix", "Golden Titan", "Infinity Lord"]
-};
+const packs = [
+  {
+    name: "Steal an Egg Pets Pack",
+    price: 500,
+    emoji: "🥚",
+    characters: [
+      { name: "Egg Buddy", emoji: "🐣", chance: 50, rarity: "Common" },
+      { name: "Golden Chick", emoji: "🐤", chance: 30, rarity: "Rare" },
+      { name: "Diamond Egg", emoji: "💎", chance: 20, rarity: "Epic" }
+    ]
+  },
+  {
+    name: "Classmates Pack",
+    price: 1000,
+    emoji: "🎒",
+    characters: [
+      { name: "Di.uh.ree.uh", emoji: "🚽", chance: 10, rarity: "Common" },
+      { name: "Flat.yoo.lens", emoji: "💨", chance: 10, rarity: "Common" },
+      { name: "Boog.er", emoji: "🤧", chance: 10, rarity: "Common" },
+      { name: "Kon.sti.pay.shun", emoji: "🧱", chance: 10, rarity: "Rare" },
+      { name: "Barf.o.ram.uh", emoji: "🤢", chance: 10, rarity: "Rare" },
+      { name: "Smel.ee", emoji: "🦨", chance: 10, rarity: "Rare" },
+      { name: "Stink.bomb", emoji: "💣", chance: 10, rarity: "Epic" },
+      { name: "Snot.rak.et", emoji: "🚀", chance: 10, rarity: "Epic" },
+      { name: "Toot.sy", emoji: "🎈", chance: 5, rarity: "Legendary" },
+      { name: "Belch.er", emoji: "🐸", chance: 5, rarity: "Legendary" }
+    ]
+  },
+  {
+    name: "Teachers Pack",
+    price: 2000,
+    emoji: "📚",
+    characters: [
+      { name: "Mr. De.ten.shun", emoji: "⏰", chance: 10, rarity: "Common" },
+      { name: "Ms. Home.Wurk", emoji: "📓", chance: 10, rarity: "Common" },
+      { name: "Mrs. Pop.Kwiz", emoji: "❓", chance: 10, rarity: "Common" },
+      { name: "Mr. Eks.pelled", emoji: "🚪", chance: 10, rarity: "Rare" },
+      { name: "Ms. Tar.dee", emoji: "🏃", chance: 10, rarity: "Rare" },
+      { name: "Mrs. Fail.yur", emoji: "📉", chance: 10, rarity: "Rare" },
+      { name: "Mr. Strickt", emoji: "📏", chance: 10, rarity: "Epic" },
+      { name: "Ms. Lek.chur", emoji: "🎤", chance: 10, rarity: "Epic" },
+      { name: "Mrs. Ru.brik", emoji: "📋", chance: 5, rarity: "Legendary" },
+      { name: "Mr. Sil.uh.bus", emoji: "📖", chance: 5, rarity: "Legendary" }
+    ]
+  },
+  {
+    name: "Students Pack",
+    price: 10000,
+    emoji: "🎓",
+    characters: [
+      { name: "Wang Tianxin", emoji: "🌟", chance: 0.00000000001, rarity: "Secret" },
+      { name: "Ong Yi Oliver", emoji: "👑", chance: 0.00000000001, rarity: "Secret" },
+      { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Secret" }
+    ]
+  }
+];
+
+function saveGame() {
+  localStorage.setItem("coins", coins);
+  localStorage.setItem("power", power);
+  localStorage.setItem("upgradeCost", upgradeCost);
+  localStorage.setItem("owned", JSON.stringify(owned));
+}
 
 function clickCoin() {
   coins += power;
+  document.getElementById("floatingRewards").textContent = "+" + power + " 🪙";
   update();
 }
 
 function buyUpgrade() {
-  if (coins >= upgradeCost) {
-    coins -= upgradeCost;
-    power += 1;
-    upgradeCost = Math.floor(upgradeCost * 1.8);
-    showMessage("Upgrade purchased! Your clicks are stronger!");
-  } else {
-    showMessage("Not enough coins for this upgrade!");
-  }
-
-  update();
-}
-
-function buyPack(price, rarity) {
-  if (coins < price) {
-    showMessage("You need more coins to buy this pack!");
+  if (coins < upgradeCost) {
+    showMessage("Not enough coins!");
     return;
   }
 
-  coins -= price;
-
-  const possibleRewards = rewards[rarity];
-  const reward = possibleRewards[
-    Math.floor(Math.random() * possibleRewards.length)
-  ];
-
-  collection.push({ name: reward, rarity: rarity });
-
-  showMessage("🎉 You opened a " + rarity + " Pack and got " + reward + "!");
+  coins -= upgradeCost;
+  power++;
+  upgradeCost = Math.floor(upgradeCost * 1.8);
+  showMessage("Click power upgraded!");
   update();
+}
+
+function buyPack(index) {
+  const pack = packs[index];
+
+  if (coins < pack.price) {
+    showMessage("Not enough coins!");
+    return;
+  }
+
+  coins -= pack.price;
+
+  const character = chooseCharacter(pack.characters);
+
+  if (!owned.includes(character.name)) {
+    owned.push(character.name);
+  }
+
+  document.getElementById("reveal").innerHTML =
+    "<div style='font-size:60px'>" + character.emoji + "</div>" +
+    "<strong>" + character.name + "</strong><br>" +
+    character.rarity + "<br>" +
+    "You opened: " + pack.name;
+
+  showMessage("New pack opened!");
+  update();
+}
+
+function chooseCharacter(characters) {
+  const roll = Math.random() * 100;
+  let total = 0;
+
+  for (const character of characters) {
+    total += character.chance;
+    if (roll < total) return character;
+  }
+
+  return characters[0];
 }
 
 function showMessage(message) {
   document.getElementById("message").textContent = message;
 }
 
+function drawPacks() {
+  document.getElementById("packShop").innerHTML = packs.map((pack, index) =>
+    "<div class='pack'>" +
+    "<h3>" + pack.emoji + " " + pack.name + "</h3>" +
+    "<p>Price: " + pack.price.toLocaleString() + " coins</p>" +
+    "<button onclick='buyPack(" + index + ")'>BUY PACK</button>" +
+    "</div>"
+  ).join("");
+}
+
+function drawCollection() {
+  document.getElementById("collection").innerHTML = packs.map(pack =>
+    "<h3>" + pack.emoji + " " + pack.name + "</h3>" +
+    pack.characters.map(character => {
+      const unlocked = owned.includes(character.name);
+
+      return "<div class='character " + (unlocked ? "" : "locked") + "'>" +
+        "<div style='font-size:35px'>" + (unlocked ? character.emoji : "❓") + "</div>" +
+        "<strong>" + (unlocked ? character.name : "???") + "</strong><br>" +
+        (unlocked ? character.rarity : "Locked") +
+        (unlocked ? "<br><small>Unlocked!</small>" : "") +
+        "</div>";
+    }).join("")
+  ).join("");
+}
+
 function update() {
   document.getElementById("coins").textContent = coins.toLocaleString();
   document.getElementById("power").textContent = power;
-  document.getElementById("upgrade-cost").textContent =
-    upgradeCost.toLocaleString();
+  document.getElementById("upgradeButton").textContent =
+    "Upgrade Click Power — " + upgradeCost.toLocaleString() + " Coins";
 
-  const collectionBox = document.getElementById("collection");
-
-  if (collection.length === 0) {
-    collectionBox.textContent = "No rewards yet. Open a pack!";
-  } else {
-    collectionBox.innerHTML = collection.map(item =>
-      "<p>🎁 " + item.name + " <strong>(" +
-      item.rarity + ")</strong></p>"
-    ).join("");
-  }
+  drawCollection();
+  saveGame();
 }
 
+drawPacks();
 update();
