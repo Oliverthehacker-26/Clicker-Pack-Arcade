@@ -1,8 +1,8 @@
 
 let coins = 1000;
-let power = Number(localStorage.getItem("power")) || 1;
-let upgradeCost = Number(localStorage.getItem("upgradeCost")) || 50;
-let owned = JSON.parse(localStorage.getItem("owned")) || [];
+let power = 1;
+let upgradeCost = 50;
+let owned = [];
 
 const packs = [
   {
@@ -29,7 +29,7 @@ const packs = [
       { name: "Stink.bomb", emoji: "💣", chance: 10, rarity: "Epic" },
       { name: "Snot.rak.et", emoji: "🚀", chance: 10, rarity: "Epic" },
       { name: "Toot.sy", emoji: "🎈", chance: 5, rarity: "Legendary" },
-      { name: "Belch.er", emoji: "🐸", chance: 5, rarity: "Legendary" }
+      { name: "Belch.er", emoji: "🐸", chance: 5, rarity: "Legendary" },
       { name: "Wang Tianxin", emoji: "🌟", chance: 0.00000000001, rarity: "Secret" },
       { name: "Ong Yi Oliver", emoji: "👑", chance: 0.00000000001, rarity: "Secret" },
       { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Secret" }
@@ -51,13 +51,11 @@ const packs = [
       { name: "Mrs. Ru.brik", emoji: "📋", chance: 5, rarity: "Legendary" },
       { name: "Mr. Sil.uh.bus", emoji: "📖", chance: 5, rarity: "Legendary" }
     ]
-  },
-  {
+  }
+];
+
 function saveGame() {
-  localStorage.setItem("coins", coins);
-  localStorage.setItem("power", power);
-  localStorage.setItem("upgradeCost", upgradeCost);
-  localStorage.setItem("owned", JSON.stringify(owned));
+  // Saving disabled.
 }
 
 function clickCoin() {
@@ -106,7 +104,11 @@ function buyPack(index) {
 }
 
 function chooseCharacter(characters) {
-  const roll = Math.random() * 100;
+  const totalChance = characters.reduce(
+    (sum, character) => sum + character.chance, 0
+  );
+
+  let roll = Math.random() * totalChance;
   let total = 0;
 
   for (const character of characters) {
@@ -114,7 +116,7 @@ function chooseCharacter(characters) {
     if (roll < total) return character;
   }
 
-  return characters[0];
+  return characters[characters.length - 1];
 }
 
 function showMessage(message) {
