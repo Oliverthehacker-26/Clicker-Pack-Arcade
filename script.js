@@ -17,7 +17,7 @@ const packs = [
   },
   {
     name: "Classmates Pack",
-    price: 10000,
+    price: 2000,
     emoji: "🎒",
     characters: [
       { name: "Di.uh.ree.uh", emoji: "🚽", chance: 10, rarity: "Common" },
@@ -30,14 +30,14 @@ const packs = [
       { name: "Snot.rak.et", emoji: "🚀", chance: 10, rarity: "Epic" },
       { name: "Toot.sy", emoji: "🎈", chance: 5, rarity: "Legendary" },
       { name: "Belch.er", emoji: "🐸", chance: 5, rarity: "Legendary" },
-      { name: "Wang Tianxin", emoji: "🌟", chance: 0.00000000001, rarity: "Secret" },
-      { name: "Ong Yi Oliver", emoji: "👑", chance: 0.00000000001, rarity: "Secret" },
-      { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Secret" }
+      { name: "Wang Tianxin", emoji: "🌟", chance: 0.00000000001, rarity: "Mystical" },
+      { name: "Ong Yi Oliver", emoji: "👑", chance: 0.00000000001, rarity: "Mystical" },
+      { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Mystical" }
     ]
   },
   {
     name: "Teachers Pack",
-    price: 2000,
+    price: 1000,
     emoji: "📚",
     characters: [
       { name: "Mr. De.ten.shun", emoji: "⏰", chance: 10, rarity: "Common" },
@@ -50,7 +50,6 @@ const packs = [
       { name: "Ms. Lek.chur", emoji: "🎤", chance: 10, rarity: "Epic" },
       { name: "Mrs. Ru.brik", emoji: "📋", chance: 5, rarity: "Legendary" },
       { name: "Mr. Sil.uh.bus", emoji: "📖", chance: 5, rarity: "Legendary" }
-      { name: "Mr. Ang.ry.Kahboom",emogi"💣", chance: 0.1, rarity: "Secret"}
     ]
   }
 ];
