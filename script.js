@@ -120,7 +120,54 @@ function toggleLuck() {
   );
 }
 
+
 function buyPack(index) {
+  const pack = packs[index];
+
+  if (coins < pack.price) {
+    showMessage("Not enough coins!");
+    return;
+  }
+
+  let character;
+
+  if (luckEnabled) {
+    // Only Secret and Mystical characters are allowed!
+    const eligible = pack.characters.filter(character =>
+      character.rarity === "Secret" ||
+      character.rarity === "Mystical"
+    );
+
+    if (eligible.length === 0) {
+      showMessage("NO SECRET OR MYSTICAL IN THIS PACK!");
+      return;
+    }
+
+    character = eligible[
+      Math.floor(Math.random() * eligible.length)
+    ];
+  } else {
+    character = chooseCharacter(pack.characters);
+  }
+
+  if (!character) return;
+
+  coins -= pack.price;
+
+  if (!owned.includes(character.name)) {
+    owned.push(character.name);
+  }
+
+  document.getElementById("reveal").innerHTML =
+    "<div style='font-size:60px'>" + character.emoji + "</div>" +
+    "<strong>" + character.name + "</strong><br>" +
+    character.rarity + "<br>" +
+    "You opened: " + pack.name;
+
+  showMessage("You got " + character.name + "!");
+
+  update();
+}
   const pack = packs[index];
 
   if (coins < pack.price) {
