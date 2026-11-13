@@ -9,33 +9,43 @@
 </head>
 <body>
   <header>
-    <h1>🎮 Clicker ARENA</h1>
+    <h1>🎮 ARCADE ARENA</h1>
     <p>Click, collect and become a legend!</p>
   </header>
 
   <main>
     <section class="coin-area">
       <h2>🪙 <span id="coins">0</span> Coins</h2>
+
       <button id="clickButton" onclick="clickCoin()">
         🪙 CLICK ME!
       </button>
+
       <div id="floatingRewards"></div>
       <p>Click to earn coins!</p>
+
       <button onclick="buyUpgrade()" id="upgradeButton">
         Upgrade Click Power — 50 Coins
       </button>
+
       <p>Click power: <span id="power">1</span></p>
+
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+        <button onclick="openAdmin()" id="adminButton">
+          🔐 ADMIN
+        </button>
+
+        <button onclick="toggleLuck()" id="luckButton">
+          🍀 LUCK MODE: OFF
+        </button>
+      </div>
     </section>
-    <button onclick="openAdmin()" id="adminButton">
-  🔐 ADMIN
-</button>
+
     <section>
       <h2>🎁 PACK SHOP</h2>
       <div id="packShop" class="pack-grid"></div>
     </section>
-<button onclick="toggleLuck()" id="luckButton">
-  🍀 LUCK MODE: OFF
-</button>
+
     <section>
       <h2>✨ PACK REVEAL</h2>
       <div id="reveal">
@@ -52,7 +62,7 @@
   </main>
 
   <footer>
-    <p>CLICKER ARENA 2026</p>
+    <p>ARCADE ARENA © 2026</p>
   </footer>
 
   <script src="script.js"></script>
