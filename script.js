@@ -50,7 +50,7 @@ const packs = [
       { name: "Ms. Lek.chur", emoji: "🎤", chance: 10, rarity: "Epic" },
       { name: "Mrs. Ru.brik", emoji: "📋", chance: 5, rarity: "Legendary" },
       { name: "Mr. Sil.uh.bus", emoji: "📖", chance: 5, rarity: "Legendary" }
-      { name: "Mr. Ang.ry.Kahboom",emogi"💣", chance: 0.1, rarity: "secret"}
+      { name: "Mr. Ang.ry.Kahboom",emogi"💣", chance: 0.1, rarity: "Secret"}
     ]
   }
 ];
