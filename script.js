@@ -42,7 +42,7 @@ const packs = [
     characters: [
       { name: "Mr. De.ten.shun", emoji: "⏰", chance: 10, rarity: "Common" },
       { name: "Ms. Home.Wurk", emoji: "📓", chance: 10, rarity: "Common" },
-      { name: "Mrs. Pop.Kwiz", emoji: "❓", chance: 10, rarity: "Common" },
+      { name: "Mrs. Pop.Kwiz", emoji: "📝", chance: 10, rarity: "Common" },
       { name: "Mr. Eks.pelled", emoji: "🚪", chance: 10, rarity: "Rare" },
       { name: "Ms. Tar.dee", emoji: "🏃", chance: 10, rarity: "Rare" },
       { name: "Mrs. Fail.yur", emoji: "📉", chance: 10, rarity: "Rare" },
@@ -50,6 +50,7 @@ const packs = [
       { name: "Ms. Lek.chur", emoji: "🎤", chance: 10, rarity: "Epic" },
       { name: "Mrs. Ru.brik", emoji: "📋", chance: 5, rarity: "Legendary" },
       { name: "Mr. Sil.uh.bus", emoji: "📖", chance: 5, rarity: "Legendary" }
+      { name: "Mr. Ang.ry.Kahboom",emogi"💣", chance: 0.1, rarity: "secret"}
     ]
   }
 ];
