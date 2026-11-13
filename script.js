@@ -4,6 +4,7 @@ let power = 1;
 let upgradeCost = 50;
 let owned = [];
 let luckEnabled = false;
+
 const packs = [
   {
     name: "Steal an Egg Pets Pack",
@@ -17,7 +18,7 @@ const packs = [
   },
   {
     name: "Classmates Pack",
-    price: 2000,
+    price: 10000,
     emoji: "🎒",
     characters: [
       { name: "Di.uh.ree.uh", emoji: "🚽", chance: 10, rarity: "Common" },
@@ -37,7 +38,7 @@ const packs = [
   },
   {
     name: "Teachers Pack",
-    price: 1000,
+    price: 2000,
     emoji: "📚",
     characters: [
       { name: "Mr. De.ten.shun", emoji: "⏰", chance: 10, rarity: "Common" },
@@ -49,13 +50,14 @@ const packs = [
       { name: "Mr. Strickt", emoji: "📏", chance: 10, rarity: "Epic" },
       { name: "Ms. Lek.chur", emoji: "🎤", chance: 10, rarity: "Epic" },
       { name: "Mrs. Ru.brik", emoji: "📋", chance: 5, rarity: "Legendary" },
-      { name: "Mr. Sil.uh.bus", emoji: "📖", chance: 5, rarity: "Legendary" }
+      { name: "Mr. Sil.uh.bus", emoji: "📖", chance: 5, rarity: "Legendary" },
+      { name: "Mr. Ang.ry.Kahboom", emoji: "💣", chance: 0.1, rarity: "Mystical" }
     ]
   }
 ];
 
 function saveGame() {
-  // Saving disabled.
+  // Saving is disabled, as requested.
 }
 
 function clickCoin() {
@@ -75,6 +77,43 @@ function buyUpgrade() {
   upgradeCost = Math.floor(upgradeCost * 1.8);
   showMessage("Click power upgraded!");
   update();
+}
+
+function toggleLuck() {
+  const code = prompt("Enter admin password:");
+
+  if (code === null) return;
+
+  if (code !== "841036") {
+    alert("ACCESS DENIED!");
+    return;
+  }
+
+  luckEnabled = !luckEnabled;
+
+  const button = document.getElementById("luckButton");
+  if (button) {
+    button.textContent = luckEnabled
+      ? "🍀 LUCK MODE: ON"
+      : "🍀 LUCK MODE: OFF";
+  }
+
+  alert(luckEnabled ? "LUCK MODE ACTIVATED!" : "LUCK MODE DISABLED!");
+}
+
+function openAdmin() {
+  const code = prompt("ENTER ADMIN PASSWORD:");
+
+  if (code === null) return;
+
+  if (code === "841036") {
+    coins = Infinity;
+    update();
+    showMessage("ADMIN ACTIVATED!");
+    alert("ADMIN ACCESS GRANTED!");
+  } else {
+    alert("ACCESS DENIED!");
+  }
 }
 
 function buyPack(index) {
@@ -104,19 +143,32 @@ function buyPack(index) {
 }
 
 function chooseCharacter(characters) {
-  const totalChance = characters.reduce(
+  let available = characters;
+
+  if (luckEnabled) {
+    const luckyCharacters = characters.filter(character =>
+      character.rarity === "Mystical" ||
+      character.rarity === "Legendary"
+    );
+
+    if (luckyCharacters.length > 0) {
+      available = luckyCharacters;
+    }
+  }
+
+  const totalChance = available.reduce(
     (sum, character) => sum + character.chance, 0
   );
 
   let roll = Math.random() * totalChance;
   let total = 0;
 
-  for (const character of characters) {
+  for (const character of available) {
     total += character.chance;
     if (roll < total) return character;
   }
 
-  return characters[characters.length - 1];
+  return available[available.length - 1];
 }
 
 function showMessage(message) {
@@ -158,17 +210,6 @@ function update() {
   drawCollection();
   saveGame();
 }
-function openAdmin() {
-  const code = prompt("🔐 ENTER 6-DIGIT ADMIN CODE:");
 
-  if (code === "841036") {
-    coins = Infinity;
-    update();
-    showMessage("👑 ADMIN ACTIVATED! INFINITE MONEY!");
-    alert("ADMIN ACCESS GRANTED! INFINITE MONEY!");
-  } else if (code !== null) {
-    alert("❌ ACCESS DENIED!");
-  }
-}
 drawPacks();
 update();
