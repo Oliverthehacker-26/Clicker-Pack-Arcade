@@ -10,14 +10,14 @@ const packs = [
     price: 500,
     emoji: "🥚",
     characters: [
-      { name: "Egg Buddy", emoji: "🐣", chance: 50, rarity: "Common" },
-      { name: "Golden Chick", emoji: "🐤", chance: 30, rarity: "Rare" },
-      { name: "Diamond Egg", emoji: "💎", chance: 20, rarity: "Epic" }
+      { name: "Chicken", emoji: "🐤", chance: 50, rarity: "Common" },
+      { name: "World burner", emoji: "🌍🔥", chance: 30, rarity: "Rare" },
+      { name: "Celestial Sunlion", emoji: "🦁🌌", chance: 20, rarity: "Epic" }
     ]
   },
   {
     name: "Classmates Pack",
-    price: 1000,
+    price: 10000,
     emoji: "🎒",
     characters: [
       { name: "Di.uh.ree.uh", emoji: "🚽", chance: 10, rarity: "Common" },
@@ -30,6 +30,9 @@ const packs = [
       { name: "Snot.rak.et", emoji: "🚀", chance: 10, rarity: "Epic" },
       { name: "Toot.sy", emoji: "🎈", chance: 5, rarity: "Legendary" },
       { name: "Belch.er", emoji: "🐸", chance: 5, rarity: "Legendary" }
+      { name: "Wang Tianxin", emoji: "🌟", chance: 0.00000000001, rarity: "Secret" },
+      { name: "Ong Yi Oliver", emoji: "👑", chance: 0.00000000001, rarity: "Secret" },
+      { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Secret" }
     ]
   },
   {
@@ -50,17 +53,6 @@ const packs = [
     ]
   },
   {
-    name: "Students Pack",
-    price: 10000,
-    emoji: "🎓",
-    characters: [
-      { name: "Wang Tianxin", emoji: "🌟", chance: 0.00000000001, rarity: "Secret" },
-      { name: "Ong Yi Oliver", emoji: "👑", chance: 0.00000000001, rarity: "Secret" },
-      { name: "John Do Khoa Kien", emoji: "🔥", chance: 0.00000000001, rarity: "Secret" }
-    ]
-  }
-];
-
 function saveGame() {
   localStorage.setItem("coins", coins);
   localStorage.setItem("power", power);
